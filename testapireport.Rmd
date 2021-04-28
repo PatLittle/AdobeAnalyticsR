@@ -1,0 +1,49 @@
+---
+title: "Adobe Analytics API - Experimentation"
+author: "Patrick Little"
+date: "28/04/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+```
+
+```{r}
+
+library(adobeanalyticsr)
+get_me()
+
+```
+
+
+
+```{r}
+topPages<-aw_freeform_table(
+  date_range = c("2021-04-01", "2021-04-28"),
+  company_id = Sys.getenv("AW_COMPANY_ID"),
+  rsid = Sys.getenv("AW_REPORTSUITE_ID"),
+  dimensions = c("prop65","evar11"),
+  metrics = c("pageviews","visits","event25"),
+  search = "MATCH 'OG-GO'",
+  top = c(20)
+  )
+names(topPages)<-c("App Name","Page Name","pageviews","visits","downloads")
+kable(topPages)
+
+```
+```{r}
+topDepts<-aw_freeform_table(
+  date_range = c("2021-04-01", "2021-04-28"),
+  company_id = Sys.getenv("AW_COMPANY_ID"),
+  rsid = Sys.getenv("AW_REPORTSUITE_ID"),
+  dimensions = c("prop65","evar14.1"),
+  metrics = c("pageviews","visits","event25"),
+  search = "MATCH 'OG-GO'",
+  top = c(20)
+)
+names(topDepts)<-c("App Name","Department Name","pageviews","visits","downloads")
+kable(topDepts)
+```
+
