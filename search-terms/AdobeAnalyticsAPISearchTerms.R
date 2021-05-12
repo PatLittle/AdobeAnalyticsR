@@ -33,7 +33,7 @@ searchQEN<-rbind(searchQEN,x)
 }
 
 topSearchesEN<-cbind(topSearchesEN,searchQEN)
-names(topSearchesEN)<-c("AA_Service_Name","base_URL","query_path","search_text_query")
+names(topSearchesEN)<-c("AA_Service_Name","base_URL","query_path","page_views","search_text_query")
 
 searchQFR<-data.frame()
 names(searchQFR)<-"search_text_query_FR"
@@ -44,7 +44,7 @@ for (i in 1:length(topSearchesFR$prop39)){
 }
 
 topSearchesFR<-cbind(topSearchesFR,searchQFR)
-names(topSearchesEN)<-c("AA_Service_Name","base_URL","query_path","search_text_query")
+names(topSearchesFR)<-c("AA_Service_Name","base_URL","query_path","page_views","search_text_query")
 
-write.table(topSearchesEN,file="topSearchesEN.csv",append = F, col.names = T, row.names = F)
-write.table(topSearchesFR,file="topsearchesFR.csv",append = F, col.names = T, row.names = F)
+write.table(topSearchesEN,file="topSearchesEN.csv",append = F, col.names = T, row.names = F, sep=",", qmethod = "double")
+write.table(topSearchesFR,file="topsearchesFR.csv",append = F, col.names = T, row.names = F,sep=",", qmethod = "double")
