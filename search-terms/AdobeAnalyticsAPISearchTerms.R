@@ -1,4 +1,5 @@
 library(adobeanalyticsr)
+library(httr)
 get_me()
 
 stuff<-aw_get_dimensions()
@@ -23,3 +24,27 @@ topSearchesFR<-aw_freeform_table(
   top = c(5000)
 )
 
+searchQEN<-data.frame()
+names(searchQEN)<-"search_text_query"
+
+for (i in 1:length(topSearchesEN$prop39)){
+x<-parse_url(topSearchesEN$prop39[i])$query$search_text
+searchQEN<-rbind(searchQEN,x)
+}
+
+topSearchesEN<-cbind(topSearchesEN,searchQEN)
+names(topSearchesEN)<-c("AA_Service_Name","base_URL","query_path","search_text_query")
+
+searchQFR<-data.frame()
+names(searchQFR)<-"search_text_query_FR"
+
+for (i in 1:length(topSearchesFR$prop39)){
+  x<-parse_url(topSearchesFR$prop39[i])$query$search_text
+  searchQFR<-rbind(searchQFR,x)
+}
+
+topSearchesFR<-cbind(topSearchesFR,searchQFR)
+names(topSearchesEN)<-c("AA_Service_Name","base_URL","query_path","search_text_query")
+
+write.table(topSearchesEN,file="topSearchesEN.csv",append = F, col.names = T, row.names = F)
+write.table(topSearchesFR,file="topsearchesFR.csv",append = F, col.names = T, row.names = F)
